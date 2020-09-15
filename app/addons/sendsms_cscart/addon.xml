@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+
+<addon scheme='3.0'>
+
+    <id>sendsms_cscart</id>
+    <version>0.1</version>
+    <name>Send SMS</name>
+    <description>Send a sms with our service</description>
+    <priority>102300</priority>
+    <status>active</status>
+
+    <settings layout="separate">
+        <sections>
+            <section id="general">
+                <items>
+                    <item id="header-login">
+                        <name>Loggin info</name>
+                        <type>header</type>
+                    </item>
+                    <item id="login-name" tooltip="Your Send SMS name">
+                        <name>Enter your log-in name here</name>
+                        <type>input</type> 
+                    </item>
+                    <item id="login-pass" tooltip="Your Send SMS password" > 
+                        <name>Enter your log-in password or api key</name>
+                        <type>password</type>
+                    </item>
+                    <item id="message-expeditor" tooltip="The message lable">
+                        <name>The sender's label</name>
+                        <type>input</type> 
+                    </item>
+                </items>
+            </section>
+            <section id="messages">
+                <items>
+                    <item id="header-message">
+                        <name>Messages</name>
+                        <type>header</type>
+                    </item>
+                    <item id="messageinformation">
+                        <type>info</type>
+                        <handler>fn_add_autocomplete_variables_sendsms_cscart_messageinformation</handler>
+                    </item>
+                    <item id="processed-validation">
+                        <name>Sending message when order status is change to "Processed"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="processed-message">
+                        <name>The message when order status is change to "Processed"</name>
+                        <type>textarea</type>
+                    </item>
+                    <item id="complete-validation">
+                        <name>Sending message when order status is change to "Complete"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="complete-message">
+                        <name>The message when order status is change to "Complete"</name>
+                        <type>textarea</type>
+                    </item>
+                    <item id="open-validation">
+                        <name>Sending message when order status is change to "Open"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="open-message">
+                        <name>The message when order status is change to "Open"</name>
+                        <type>textarea</type>
+                    </item>
+                    <item id="failed-validation">
+                        <name>Sending message when order status is change to "Failed"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="failed-message">
+                        <name>The message when order status is change to "Failed"</name>
+                        <type>textarea</type>
+                    </item>
+                    <item id="declined-validation">
+                        <name>Sending message when order status is change to "Declined"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="declined-message">
+                        <name>The message when order status is change to "Declined"</name>
+                        <type>textarea</type>
+                    </item>
+                    <item id="backordered-validation">
+                        <name>Sending message when order status is change to "Backordered"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="backordered-message">
+                        <name>The message when order status is change to "Backordered"</name>
+                        <type>textarea</type>
+                    </item>
+                    <item id="canceled-validation">
+                        <name>Sending message when order status is change to "Canceled"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="canceled-message">
+                        <name>The message when order status is change to "Canceled"</name>
+                        <type>textarea</type>
+                    </item>
+                    <item id="awaiting_call-validation">
+                        <name>Sending message when order status is change to "Awaiting call"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="awaiting_call-message">
+                        <name>The message when order status is change to "Awaiting call"</name>
+                        <type>textarea</type>
+                    </item>
+                </items>
+            </section>
+        </sections>
+    </settings>
+
+    <queries>
+        <item for="install">DROP TABLE IF EXISTS ?:sendsms_data;</item>
+        <item for="install">
+            CREATE TABLE `?:sendsms_data` 
+            (   
+                `order_id` int(12) unsigned NOT NULL DEFAULT 0,
+                `order_info` text NOT NULL DEFAULT '',
+                PRIMARY KEY (`order_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:sendsms_data;</item>
+    </queries>
+
+</addon>
