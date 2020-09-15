@@ -2,7 +2,7 @@
 function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
 {
 
-    return 'Avaible values: '. '<a onClick="placeInFocusedTextarea()">' . '{order_id}' .'</a>'. ', {total}, {date}, {firstname}
+    return 'Avaible values: ' . '<a onClick="placeInFocusedTextarea(\'{order_id}\')">' . '{order_id}' .'</a>'. ', ' . '<a onClick="placeInFocusedTextarea(\'{total}\')">'.'{total}'.'</a>'.', ' . '<a onClick="placeInFocusedTextarea(\'{date}\')">'.'{date}'.'</a>'.', ' . '<a onClick="placeInFocusedTextarea(\'{firstname}\')">'.'{firstname} '.'</a>'.'
     <script>
     var focused;
     document.addEventListener("DOMContentLoaded", (event) => {
@@ -16,11 +16,11 @@ function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
             });
         }
     });
-    function placeInFocusedTextarea()
+    function placeInFocusedTextarea(textToAdd)
     {
         if(focused)
         {
-            focused.value += ceva;
+            focused.value += textToAdd;
         }
     }
 
