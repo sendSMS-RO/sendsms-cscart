@@ -17,6 +17,10 @@
                         <name>Loggin info</name>
                         <type>header</type>
                     </item>
+                    <item id="lenghtlimitation">
+                        <type>info</type>
+                        <handler>fn_add_limit_sendsms_cscart_lenghtlimitation</handler>
+                    </item>
                     <item id="login-name" tooltip="Your Send SMS name">
                         <name>Enter your log-in name here</name>
                         <type>input</type> 

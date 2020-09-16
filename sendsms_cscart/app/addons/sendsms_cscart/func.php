@@ -1,28 +1,30 @@
 <?php
 use Tygh\Registry;
 
+if (!defined('BOOTSTRAP')) { die('Access denied'); }
+
 function fn_sendsms_cscart_change_order_status_post($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
     if (file_exists('order_info.txt'))
         unlink('order_info.txt');
 
     fn_print_r(Registry::get('addons.sendsms_cscart.login-name'));
+    fn_print_r(Registry::get('addons.sendsms_cscart.login-pass'));
+    fn_print_r(Registry::get('addons.sendsms_cscart.message-expeditor'));
 
-    //if(Registry::get('addons.sendsms_cscart.login-name'))
-    //{
-    //    file_put_contents('order_info.txt', 'da', FILE_APPEND);
-    //}else
-    //{
-    //    file_put_contents('order_info.txt', 'nu', FILE_APPEND);
-    //}
-//
-    //try
-    //{
-    //    file_put_contents('order_info.txt', var_export(Registry::get('addons.sendsms_cscart.login-name'), true), FILE_APPEND);
-    //}catch (Exception $e)
-    //{
-    //    file_put_contents('order_info.txt', var_export($e, true), FILE_APPEND);
-    //}
+    $api = new SendsmsApi();
+    if(Registry::get('addons.sendsms_cscart.login-name') !== "")
+        $api -> setUsername(Registry::get('addons.sendsms_cscart.login-name'));
+    if(Registry::get('addons.sendsms_cscart.login-pass') !== "")
+        $api -> setPassword(Registry::get('addons.sendsms_cscart.login-pass'));
+    $result = $api -> message_send_gdpr("40739949131", "Test https://stackoverflow.com/questions/10005335/how-does-position-of-parameters-in-a-query-string-affect-the-page", Registry::get('addons.sendsms_cscart.message-expeditor'));
+
+    if($api->ok($result)) {
+        fn_print_r("Message sent! ID was {$result['details']}\n");    
+    } else {
+        /* There was an error */
+        fn_print_r($api->getError());
+    }
     
     //file_put_contents('order_info.txt', 'Status to: ' . var_export($status_to, true) . "\n", FILE_APPEND);
     //file_put_contents('order_info.txt', 'Status from: ' . var_export($status_from, true) . "\n", FILE_APPEND);
@@ -212,6 +214,11 @@ class SendsmsApi {
     }
  
     function message_send($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null) {
+        $args = func_get_args();
+        return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
+    }
+
+    function message_send_gdpr($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = true) {
         $args = func_get_args();
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
     }

@@ -1,4 +1,17 @@
 <?php
+
+if (!defined('BOOTSTRAP')) { die('Access denied'); }
+
+function fn_add_limit_sendsms_cscart_lenghtlimitation()
+{
+    return '<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        console.log(document.getElementById("addon_option_sendsms_cscart_message-expeditor"));
+        document.getElementById("addon_option_sendsms_cscart_message-expeditor").setAttribute("maxlength", 11);
+    });
+    </script>';
+}
+
 function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
 {
 
