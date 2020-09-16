@@ -18,6 +18,7 @@ function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
         if(focused)
         {
             focused.value += textToAdd;
+            lenghtCounter(focused, focused.previousSibling);
         }
     }
 
@@ -33,15 +34,40 @@ function fn_add_word_counter_sendsms_cscart_wordcounter()
             document.addEventListener("DOMContentLoaded", (event) => {
                 var textareas = document.getElementsByTagName("textarea");
                 for (var i=0, textarea; i<textareas.length && (textarea = textareas[i]); i++) {
-                    //console.log(textarea.parentNode);
                     var counter = document.createElement("div");
                     counter.textContent = "Some dummy text";
                     var widthToSet = textarea.offsetWidth;
                     counter.setAttribute("style", "text-align:right; padding-bottom:1em; width:522px");
-                    //console.log(textarea.offsetWidth);
                     textarea.parentNode.insertBefore(counter, textarea);
+                    
+                    textarea.addEventListener("input", (event) => 
+                    {
+                        lenghtCounter(event.target || event.srcElement, event.target.previousSibling || event.srcElement.previousSibling);
+                    });
+                    textarea.addEventListener(\'change\', (event) => 
+                    {
+                        lenghtCounter(event.target || event.srcElement, event.target.previousSibling || event.srcElement.previousSibling);
+                    });
+                    lenghtCounter(textarea, counter);
                 }
             });
+
+            function lenghtCounter(textarea, counter)
+            {
+                var lenght = textarea.value.length;
+                var messages = lenght / 160 + 1;
+                if(lenght > 0)
+                {
+                    if(lenght % 160 === 0)
+                    {
+                        messages--;
+                    }
+                    counter.textContent = "Number of messages: " + Math.floor(messages) + " (" + lenght + ")";
+                }else
+                {
+                    counter.textContent = "Field is empty";
+                }
+            }
         </script>
     ';
 }
