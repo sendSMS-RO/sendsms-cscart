@@ -7,11 +7,8 @@ function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
     var focused;
     document.addEventListener("DOMContentLoaded", (event) => {
         var inputs = document.getElementsByTagName("textarea");
-        console.log("before for");
         for (var i=0, input; i<inputs.length && (input = inputs[i]); i++) {
-            console.log("after for");
             input.addEventListener("focus", function(){
-                console.log("focus changed");
                 focused = this;
             });
         }
@@ -25,4 +22,26 @@ function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
     }
 
     </script>';
+}
+
+function fn_add_word_counter_sendsms_cscart_wordcounter()
+{
+    return
+    '   
+        <script>
+            var focused;
+            document.addEventListener("DOMContentLoaded", (event) => {
+                var textareas = document.getElementsByTagName("textarea");
+                for (var i=0, textarea; i<textareas.length && (textarea = textareas[i]); i++) {
+                    //console.log(textarea.parentNode);
+                    var counter = document.createElement("div");
+                    counter.textContent = "Some dummy text";
+                    var widthToSet = textarea.offsetWidth;
+                    counter.setAttribute("style", "text-align:right; padding-bottom:1em; width:522px");
+                    //console.log(textarea.offsetWidth);
+                    textarea.parentNode.insertBefore(counter, textarea);
+                }
+            });
+        </script>
+    ';
 }

@@ -8,21 +8,21 @@ function fn_sendsms_cscart_change_order_status_post($status_to, $status_from, $o
 
     fn_print_r(Registry::get('addons.sendsms_cscart.login-name'));
 
-    if(Registry::get('addons.sendsms_cscart.login-name'))
-    {
-        file_put_contents('order_info.txt', 'da', FILE_APPEND);
-    }else
-    {
-        file_put_contents('order_info.txt', 'nu', FILE_APPEND);
-    }
-
-    try
-    {
-        file_put_contents('order_info.txt', var_export(Registry::get('addons.sendsms_cscart.login-name'), true), FILE_APPEND);
-    }catch (Exception $e)
-    {
-        file_put_contents('order_info.txt', var_export($e, true), FILE_APPEND);
-    }
+    //if(Registry::get('addons.sendsms_cscart.login-name'))
+    //{
+    //    file_put_contents('order_info.txt', 'da', FILE_APPEND);
+    //}else
+    //{
+    //    file_put_contents('order_info.txt', 'nu', FILE_APPEND);
+    //}
+//
+    //try
+    //{
+    //    file_put_contents('order_info.txt', var_export(Registry::get('addons.sendsms_cscart.login-name'), true), FILE_APPEND);
+    //}catch (Exception $e)
+    //{
+    //    file_put_contents('order_info.txt', var_export($e, true), FILE_APPEND);
+    //}
     
     //file_put_contents('order_info.txt', 'Status to: ' . var_export($status_to, true) . "\n", FILE_APPEND);
     //file_put_contents('order_info.txt', 'Status from: ' . var_export($status_from, true) . "\n", FILE_APPEND);

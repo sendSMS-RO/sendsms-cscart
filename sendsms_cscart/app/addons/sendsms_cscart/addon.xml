@@ -41,6 +41,10 @@
                         <type>info</type>
                         <handler>fn_add_autocomplete_variables_sendsms_cscart_messageinformation</handler>
                     </item>
+                    <item id="wordcounter">
+                        <type>info</type>
+                        <handler>fn_add_word_counter_sendsms_cscart_wordcounter</handler>
+                    </item>
                     <item id="processed-validation">
                         <name>Sending message when order status is change to "Processed"?</name>
                         <type>checkbox</type>
