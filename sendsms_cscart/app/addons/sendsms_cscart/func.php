@@ -1,37 +1,75 @@
 <?php
 use Tygh\Registry;
+use Tygh\Settings;
+use Tygh\Tools\DateTimeHelper;
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
-function fn_sendsms_cscart_change_order_status_post($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
+function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
+
+    $statuses = array
+    (
+        "P" => "paid",
+        "C" => "complete",
+        "O" => "open",
+        "F" => "failed",
+        "D" => "declined",
+        "B" => "backordered",
+        "I" => "canceled",
+        "Y" => "awaiting_call",
+        "N" => "incomplete"
+    );
+    $wordsToReplace = array
+    (
+        "{order_id}" => $order_id,
+        "{total}" => $order_statuses['total']. '$',
+        "{date}" => "",
+        "{firstname}" => $order_statuses['firstname']
+    );
+
+    $timeZone = floor(DateTimeHelper::getTimeZoneOffset(Settings::instance()->getValue('timezone', 'Appearance')) / 3600);
+    if ($timeZone == 0)
+    {
+        $wordsToReplace["{date}"] = date('Y-m-d H:i:s', $order_statuses['timestamp']). " (UTC)";
+    }else 
+    {
+        if($timeZone > 0)
+            $timeZone = "+" . $timeZone; 
+        $wordsToReplace["{date}"] = date('Y-m-d H:i:s', $order_statuses['timestamp']). " (" . $timeZone . " UTC)";
+    }
+
     if (file_exists('order_info.txt'))
         unlink('order_info.txt');
-
-    fn_print_r(Registry::get('addons.sendsms_cscart.login-name'));
-    fn_print_r(Registry::get('addons.sendsms_cscart.login-pass'));
-    fn_print_r(Registry::get('addons.sendsms_cscart.message-expeditor'));
 
     $api = new SendsmsApi();
     if(Registry::get('addons.sendsms_cscart.login-name') !== "")
         $api -> setUsername(Registry::get('addons.sendsms_cscart.login-name'));
     if(Registry::get('addons.sendsms_cscart.login-pass') !== "")
         $api -> setPassword(Registry::get('addons.sendsms_cscart.login-pass'));
-    $result = $api -> message_send_gdpr("40739949131", "Test https://stackoverflow.com/questions/10005335/how-does-position-of-parameters-in-a-query-string-affect-the-page", Registry::get('addons.sendsms_cscart.message-expeditor'));
-
-    if($api->ok($result)) {
-        fn_print_r("Message sent! ID was {$result['details']}\n");    
-    } else {
-        /* There was an error */
-        fn_print_r($api->getError());
-    }
     
-    //file_put_contents('order_info.txt', 'Status to: ' . var_export($status_to, true) . "\n", FILE_APPEND);
-    //file_put_contents('order_info.txt', 'Status from: ' . var_export($status_from, true) . "\n", FILE_APPEND);
-    //file_put_contents('order_info.txt', 'Order info: ' . var_export($order_info, true) . "\n", FILE_APPEND);
-    //file_put_contents('order_info.txt', 'Force notification: ' . var_export($force_notification, true) . "\n", FILE_APPEND);
-    //file_put_contents('order_info.txt', 'Order statuses: ' . var_export($order_statuses, true) . "\n", FILE_APPEND);
-    //file_put_contents('order_info.txt', 'Place order: ' . var_export($place_order, true) . "\n", FILE_APPEND);
+    if(Registry::get('addons.sendsms_cscart.' . $statuses[$status_to] . '-validation') == "Y")
+    {
+        $message = Registry::get('addons.sendsms_cscart.' . $statuses[$status_to] . '-message');
+        foreach($wordsToReplace as $key => $value)
+        {
+            $message = str_replace($key, $value, $message);
+        }
+
+        $api->debug($message);
+    }
+
+    //this is how the msg will be send    
+    // $result = $api -> message_send_gdpr("40739949131", "Test https://stackoverflow.com/questions/10005335/how-does-position-of-parameters-in-a-query-string-affect-the-page", Registry::get('addons.sendsms_cscart.message-expeditor'), 19, null, null, null, -1, null, true);
+    
+    // if($api->ok($result)) {
+    //     fn_print_r("Message sent! ID was {$result['details']}\n");    
+    // } else {
+    //     /* There was an error */
+    //     fn_print_r($api->getError());
+    // }
+
+    file_put_contents('order_info.txt', var_export($order_statuses['firstname'], true) . "\n", FILE_APPEND);
 }
 
 class SendsmsApi {
@@ -67,16 +105,18 @@ class SendsmsApi {
         }
     }
  
-    function debug($str, $nl = true) {
+    function debug($str, $nl = false) {
+        return;
         if($this->debug) {
-            echo $str;
+            fn_print_r($str);
             if($nl) {
-                echo "\n";
+                fn_print_r("\n");
             }
         }
     }
  
     function call_api($url) {
+        fn_print_r($url);
         if(function_exists('curl_init')) {
             if($this->curl === FALSE) {
                 $this->curl = curl_init();
@@ -129,11 +169,15 @@ class SendsmsApi {
             }
             $parameters = $method->getParameters();
             for($i=0;$i<count($params);$i++) {
-                if(!is_null($params[$i])) {
+                if(!is_bool($params[$i]) && !is_null($params[$i]))
+                {
                     $url .= "&".urlencode($parameters[$i]->getName())."=".urlencode($params[$i]);
+                }elseif(is_bool($params[$i]) && !is_null($params[$i]))
+                {
+                    $url .= "&".urlencode($parameters[$i]->getName())."=".urlencode($params[$i] ? "true" : "false");
                 }
             }
-                
+
             return $this->call_api($url);
         } else {
             if(is_null($this->username) || is_null($this->password)) {
@@ -218,8 +262,9 @@ class SendsmsApi {
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
     }
 
-    function message_send_gdpr($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = true) {
+    function message_send_gdpr($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = false) {
         $args = func_get_args();
+        $this->debug($args);
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
     }
  

@@ -1,0 +1,21 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_US"
+
+msgctxt "Addons::name::sendsms_cscart"
+msgid "Send SMS"
+msgstr "Send SMS"
+
+msgctxt "Addons::description::sendsms_cscart"
+msgid "Send a sms with our service."
+msgstr "Send a sms with our service."
+
+msgctxt "SettingsSections::sendsms_cscart::header1"
+msgid "Loggin info"
+msgstr "Loggin info"
+
+msgctxt "SettingsSections::sendsms_cscart::login-name"
+msgid "Enter your log-in name here"
+msgstr "Enter your log-in name here"

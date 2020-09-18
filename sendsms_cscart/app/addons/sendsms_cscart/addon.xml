@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<addon scheme='3.0'>
+<addon scheme="3.0">
 
     <id>sendsms_cscart</id>
     <version>0.1</version>
@@ -21,15 +21,16 @@
                         <type>info</type>
                         <handler>fn_add_limit_sendsms_cscart_lenghtlimitation</handler>
                     </item>
-                    <item id="login-name" tooltip="Your Send SMS name">
+                    <item id="login-name">
                         <name>Enter your log-in name here</name>
                         <type>input</type> 
+                        <tooltip>Something</tooltip>
                     </item>
-                    <item id="login-pass" tooltip="Your Send SMS password" > 
+                    <item id="login-pass"> 
                         <name>Enter your log-in password or api key</name>
                         <type>password</type>
                     </item>
-                    <item id="message-expeditor" tooltip="The message lable">
+                    <item id="message-expeditor">
                         <name>The sender's label</name>
                         <type>input</type> 
                     </item>
@@ -49,76 +50,76 @@
                         <type>info</type>
                         <handler>fn_add_word_counter_sendsms_cscart_wordcounter</handler>
                     </item>
-                    <item id="processed-validation">
-                        <name>Sending message when order status is change to "Processed"?</name>
+                    <item id="paid-validation">
+                        <name>Sending message when order status is change to "Paid (P)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
-                    <item id="processed-message">
-                        <name>The message when order status is change to "Processed"</name>
+                    <item id="paid-message">
+                        <name>The message when order status is change to "Paid (P)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="complete-validation">
-                        <name>Sending message when order status is change to "Complete"?</name>
+                        <name>Sending message when order status is change to "Complete (C)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
                     <item id="complete-message">
-                        <name>The message when order status is change to "Complete"</name>
+                        <name>The message when order status is change to "Complete (C)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="open-validation">
-                        <name>Sending message when order status is change to "Open"?</name>
+                        <name>Sending message when order status is change to "Open (O)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
                     <item id="open-message">
-                        <name>The message when order status is change to "Open"</name>
+                        <name>The message when order status is change to "Open (O)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="failed-validation">
-                        <name>Sending message when order status is change to "Failed"?</name>
+                        <name>Sending message when order status is change to "Failed (F)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
                     <item id="failed-message">
-                        <name>The message when order status is change to "Failed"</name>
+                        <name>The message when order status is change to "Failed (F)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="declined-validation">
-                        <name>Sending message when order status is change to "Declined"?</name>
+                        <name>Sending message when order status is change to "Declined (D)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
                     <item id="declined-message">
-                        <name>The message when order status is change to "Declined"</name>
+                        <name>The message when order status is change to "Declined (D)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="backordered-validation">
-                        <name>Sending message when order status is change to "Backordered"?</name>
+                        <name>Sending message when order status is change to "Backordered (B)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
                     <item id="backordered-message">
-                        <name>The message when order status is change to "Backordered"</name>
+                        <name>The message when order status is change to "Backordered (B)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="canceled-validation">
-                        <name>Sending message when order status is change to "Canceled"?</name>
+                        <name>Sending message when order status is change to "Canceled (I)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
                     <item id="canceled-message">
-                        <name>The message when order status is change to "Canceled"</name>
+                        <name>The message when order status is change to "Canceled (I)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="awaiting_call-validation">
-                        <name>Sending message when order status is change to "Awaiting call"?</name>
+                        <name>Sending message when order status is change to "Awaiting call (Y)"?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
                     <item id="awaiting_call-message">
-                        <name>The message when order status is change to "Awaiting call"</name>
+                        <name>The message when order status is change to "Awaiting call (Y)"</name>
                         <type>textarea</type>
                     </item>
                 </items>
