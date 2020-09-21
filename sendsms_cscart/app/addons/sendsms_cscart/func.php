@@ -7,7 +7,8 @@ if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
 function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
-
+    $menu = fn_get_schema('menu', 'menu', 'php');
+    fn_print_r($menu);
     $statuses = array
     (
         "P" => "paid",
@@ -51,25 +52,37 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
     if(Registry::get('addons.sendsms_cscart.' . $statuses[$status_to] . '-validation') == "Y")
     {
         $message = Registry::get('addons.sendsms_cscart.' . $statuses[$status_to] . '-message');
-        foreach($wordsToReplace as $key => $value)
+        $phone = $order_statuses["phone"];
+        $label = Registry::get('addons.sendsms_cscart.message-expeditor');
+        if($message !== "")
         {
-            $message = str_replace($key, $value, $message);
-        }
+            if($phone !== "")
+            {
+                foreach($wordsToReplace as $key => $value)
+                {
+                    $message = str_replace($key, $value, $message);
+                    $phone = preg_replace("/[^0-9]/", "", $phone);
+                }
+                //this is how the msg will be send    
+                $result = $api -> message_send_gdpr($phone,$message, $label, 19, null, null, null, -1, null, true);
 
-        $api->debug($message);
+                if($api->ok($result)) {
+                    fn_print_r("Message sent! ID was {$result['details']}\n");    
+                } else {
+                    /* There was an error */
+                    fn_print_r($api->getError());
+                }
+            }else
+            {
+                fn_print_r("No phone number.");
+            }
+        }else
+        {
+            fn_print_r("Empty message.");
+        }
     }
 
-    //this is how the msg will be send    
-    // $result = $api -> message_send_gdpr("40739949131", "Test https://stackoverflow.com/questions/10005335/how-does-position-of-parameters-in-a-query-string-affect-the-page", Registry::get('addons.sendsms_cscart.message-expeditor'), 19, null, null, null, -1, null, true);
-    
-    // if($api->ok($result)) {
-    //     fn_print_r("Message sent! ID was {$result['details']}\n");    
-    // } else {
-    //     /* There was an error */
-    //     fn_print_r($api->getError());
-    // }
-
-    file_put_contents('order_info.txt', var_export($order_statuses['firstname'], true) . "\n", FILE_APPEND);
+    //file_put_contents('order_info.txt', var_export($order_statuses["phone"], true) . "\n", FILE_APPEND);
 }
 
 class SendsmsApi {
