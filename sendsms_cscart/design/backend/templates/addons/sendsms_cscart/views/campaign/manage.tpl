@@ -1,4 +1,14 @@
-{$c_dummy = "<i class=\"icon-dummy\"></i>"}
-{$c_icon  = "<i class=\"icon-`$search.sort_order_rev`\"></i>"}
-{$c_url   = $config.current_url|fn_query_remove:"sort_by":"sort_order"}
-{$rev     = $smarty.request.content_id|default:"pagination_contents"}
+{capture name="mainbox"}
+<form class="cm-ajax" action="campaign.php" method="post" name="product_form_817">
+    {include file="common/daterange_picker.tpl"
+    }
+
+    <input type="hidden" name="result_ids" value="" />
+    <input id="button_cart_817" type="submit" name="dispatch[checkout.add..817]" value="Add to cart" />
+</form>
+{/capture}
+{include file="common/pagination.tpl"}
+{include file="common/mainbox.tpl"
+         title="SMS Campaign"
+         content=$smarty.capture.mainbox
+}
