@@ -34,6 +34,15 @@
                         <name>The sender's label</name>
                         <type>input</type> 
                     </item>
+
+                    <item id="radiogroup">
+   <type>radiogroup</type>
+   <default_value>radio_2</default_value>
+   <variants>
+       <item id="radio_1"></item>
+       <item id="radio_2"></item>
+   </variants>
+</item>
                 </items>
             </section>
             <section id="messages">
