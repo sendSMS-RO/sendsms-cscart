@@ -9,7 +9,7 @@ $schema['top']['administration']['items']['send_sms'] = array(
     'position' => 0,
 );
 
-$schema['top']['administration']['items']['send_sms']['subitems']['advanced_import.advanced_products_import'] = array(
+$schema['top']['administration']['items']['send_sms']['subitems']['send_sms_campaign'] = array(
     'title' => 'SMS campaign',
     'attrs' => array(
         'class'=>'is-addon'
@@ -18,4 +18,5 @@ $schema['top']['administration']['items']['send_sms']['subitems']['advanced_impo
     'position' => 0,
 );
 
+//fn_print_r();
 return $schema;
