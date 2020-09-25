@@ -2,7 +2,7 @@
 use Tygh\Registry;
 use Tygh\Settings;
 use Tygh\Tools\DateTimeHelper;
-require(SITE_ROOT."/app/addons/sendsms_cscart/API/sendsms.php");
+require_once (Registry::get('config.dir.addons') ."sendsms_cscart/API/sendsms.php");
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
@@ -68,9 +68,9 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
                 foreach($wordsToReplace as $key => $value)
                 {
                     $message = str_replace($key, $value, $message);
-                    $phone = preg_replace("/[^0-9]/", "", $phone);
                 }
-                $api->debug("here");
+                $phone = preg_replace("/[^0-9]/", "", $phone);
+
                 //this is how the msg will be send    
                 $result = $api -> message_send_gdpr($phone,$message, $label, 19, null, null, null, -1, null, true);
 

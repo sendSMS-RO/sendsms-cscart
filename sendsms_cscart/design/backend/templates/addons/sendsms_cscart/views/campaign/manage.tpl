@@ -19,9 +19,9 @@
                     <input style="margin-top:0px" type="radio" id="other" name="time" value="period">
                     <label style="display:inline;" for="other">Time period</label><br>
                     <label for="start">From:</label>
-                    <input type="date" id="start" name="From">
-                    <label for="start">To:</label>
-                    <input type="date" id="end" name="To">
+                    <input type="date" id="start" name="from">
+                    <label for="start">To (inclusive):</label>
+                    <input type="date" id="end" name="to">
                 </div>
             </fieldset>
 
