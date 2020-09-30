@@ -24,7 +24,6 @@
                     <item id="login-name">
                         <name>Enter your log-in name here</name>
                         <type>input</type> 
-                        <tooltip>Something</tooltip>
                     </item>
                     <item id="login-pass"> 
                         <name>Enter your log-in password or api key</name>
@@ -128,16 +127,21 @@
     </settings>
 
     <queries>
-        <item for="install">DROP TABLE IF EXISTS ?:sendsms_data;</item>
+        <item for="install">DROP TABLE IF EXISTS ?:sendsms_errors;</item>
         <item for="install">
-            CREATE TABLE `?:sendsms_data` 
+            CREATE TABLE `?:sendsms_errors` 
             (   
-                `order_id` int(12) unsigned NOT NULL DEFAULT 0,
-                `order_info` text NOT NULL DEFAULT '',
-                PRIMARY KEY (`order_id`)
+                `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
+                `status` text NOT NULL DEFAULT '',
+                `type` text NOT NULL DEFAULT '',
+                `send_to` varchar(50),
+                `date` datetime NOT NULL,
+                `message` longtext,
+                `info` TINYTEXT,
+                PRIMARY KEY (`id`)
             ) Engine=MyISAM DEFAULT CHARSET UTF8;
         </item>
-        <item for="uninstall">DROP TABLE IF EXISTS ?:sendsms_data;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:sendsms_errors;</item>
     </queries>
 
 </addon>

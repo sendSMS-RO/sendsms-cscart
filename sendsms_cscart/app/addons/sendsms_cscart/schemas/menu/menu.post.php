@@ -27,5 +27,4 @@ $schema['top']['administration']['items']['send_sms']['subitems']['send_sms_logs
     'position' => 0,
 );
 
-//fn_print_r();
 return $schema;

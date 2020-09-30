@@ -1,8 +1,6 @@
 <?php
 
 use Tygh\Registry;
-use Tygh\Database;
-use Tygh\Database\Connection;
 use Tygh\Tools\DateTimeHelper;
 use Tygh\Settings;
 require_once (Registry::get('config.dir.addons') ."sendsms_cscart/API/sendsms.php");
@@ -10,9 +8,6 @@ require_once (Registry::get('config.dir.addons') ."sendsms_cscart/API/sendsms.ph
 defined('BOOTSTRAP') or die('Access denied');
 
 ini_set('auto_detect_line_endings', true);
-
-require_once (Registry::get('config.dir.addons') . 'ebay/config.php');
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
 {
@@ -103,39 +98,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if(isset($_REQUEST['check']))
         {
             if (defined('AJAX_REQUEST')) {
-                fn_set_notification('I', "send SMS", "A total of " . count($phones) . " phone numbers were found, resulting in approximately" . count($phones) * $messages_to_send . " messages to be send.", 'K');
+                fn_set_notification('N', "send SMS", "A total of " . count($phones) . " phone numbers were found, resulting in approximately " . count($phones) * $messages_to_send . " messages will be send.", 'K');
             }
             
         }else
         {
+            $message = $_REQUEST['message'];
             $label = Registry::get('addons.sendsms_cscart.message-expeditor');
             $api = new SendsmsApi();
             if(Registry::get('addons.sendsms_cscart.login-name') !== "")
                 $api -> setUsername(Registry::get('addons.sendsms_cscart.login-name'));
                 else
                 {
-                    //error handling 
+                    $error_data = array
+                    (
+                        'status' => 'fail',
+                        'type' => 'failed log in attempt - campaign',
+                        'send_to' => $phone,
+                        'date' => date('Y-m-d H:i:s', time()),
+                        'message' => $message,
+                        'info' => 'Your log in name is empty',
+                    );
+                    fn_set_notification('W', "send SMS", "The message was not send, your log in name is empty", 'K'); 
+                    db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     return array(CONTROLLER_STATUS_OK, "campaign.manage");;
                 }
-            $api->debug("Error here");
             if(Registry::get('addons.sendsms_cscart.login-pass') !== "")
                 $api -> setPassword(Registry::get('addons.sendsms_cscart.login-pass'));
                 else
                 {
-                    //error handling 
+                    $error_data = array
+                    (
+                        'status' => 'fail',
+                        'type' => 'failed log in attempt - campaign',
+                        'send_to' => $phone,
+                        'date' => date('Y-m-d H:i:s', time()),
+                        'message' => $message,
+                        'info' => 'Your log in password is empty',
+                    );
+                    fn_set_notification('W', "send SMS", "The message was not send, your password is empty", 'K');  
+                    db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     return array(CONTROLLER_STATUS_OK, "campaign.manage");;
                 }
-            $message = $_REQUEST['message'];
             
             foreach($phones as $phone)
             {
-                $result = $api -> message_send_gdpr($phone,$message, $label, 19, null, null, null, -1, null, true);
+                $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, true);
 
-                if($api->ok($result)) {
-                    fn_print_r("Message sent! ID was {$result['details']}\n");    
-                } else {
-                    /* There was an error */
-                    fn_print_r($api->getError());
+                if($api->ok($result)) 
+                {
+                    $error_data = array
+                    (
+                        'status' => 'success',
+                        'type' => 'send message - campaign',
+                        'send_to' => $phone,
+                        'date' => date('Y-m-d H:i:s', time()),
+                        'message' => $message,
+                        'info' => "Message sent!",
+                    );
+                    fn_set_notification('N', "send SMS", "Message sent!", 'K'); 
+                    db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
+                } else 
+                {
+                    $error_data = array
+                    (
+                        'status' => 'fail',
+                        'type' => 'attempt to send failed - campaign',
+                        'send_to' => $phone,
+                        'date' => date('Y-m-d H:i:s', time()),
+                        'message' => $message,
+                        'info' => $api->getError() ,
+                    );
+                    fn_set_notification('W', "send SMS", $api->getError(), 'K');  
+                    db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                 }
             }
         }
