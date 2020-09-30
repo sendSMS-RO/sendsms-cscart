@@ -140,19 +140,26 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
     }
 }
 
-function fn_populate_errors($conditions = null)
+function fn_populate_errors()
 {
+    $extra_query = "";
+    $phone = $_GET['phone'];
+    $date = $_GET['date'];
+
+    $extra_query = ' WHERE send_to LIKE "%' . $phone . '%" AND date LIKE "%' . $date . '%"';
+    
     $search = Array
     (
         'page' => $_REQUEST['page'] ? $_REQUEST['page'] : 1,
         'items_per_page' => $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : Registry::get('settings.Appearance.admin_elements_per_page'),
-        'total_items' => db_query('SELECT COUNT(*) from ?:sendsms_errors') -> fetch_all()[0][0],
+        'total_items' => db_query('SELECT COUNT(*) from ?:sendsms_errors'  . $extra_query) -> fetch_all()[0][0],
     );
     $startIndex = ($search['page']  - 1) * $search['items_per_page'];
     $errors = db_query
     (
         '   SELECT * 
             FROM ?:sendsms_errors
+            '  . $extra_query . '
             ORDER BY id ASC 
             LIMIT ?i, ?i', 
         $startIndex, 

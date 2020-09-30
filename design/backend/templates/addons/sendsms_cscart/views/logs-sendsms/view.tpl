@@ -1,23 +1,16 @@
 {capture name="mainbox"}
+    <form id="search-form" action="{"logs-sendsms.view"|fn_url}" method="post" name="logs.sms.1">
+        <label style="display:inline; font-size:15px" for="phone-number">Search by phone number: </label>
+        <input style="margin-bottom: 0" type="number" id="phone-number" name="phone">
+        <label style="display:inline; font-size:15px" for="date">Search by date: </label>
+        <input style="margin-bottom: 0" type="date" id="date" name="date">
+        {include file="buttons/button.tpl"
+                        but_role="submit" 
+                        but_name="save"
+                        but_text="Show logs"
+            }
+    </form>
     {if $errors}
-
-        <form id="search-form" class="cm-ajax submitForm" action="{"logs-sendsms.view"|fn_url}" method="post" name="logs.sms.1">
-
-            <label style="display:inline; font-size:15px" for="phone-number">Search by phone number: </label>
-            <input style="margin-bottom: 0" type="number" id="phone-number" name="phone">
-
-            <label style="display:inline; font-size:15px" for="date">Search by date: </label>
-            <input style="margin-bottom: 0" type="date" id="date" name="date">
-
-            {include file="buttons/button.tpl"
-                            but_role="submit" 
-                            but_name="save"
-                            but_text="Show logs"
-                }
-
-            <input id="result_ids" type="hidden" name="result_ids" value="" />
-        </form>
-
         {include file="common/pagination.tpl" 
             
         }
