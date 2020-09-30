@@ -1,6 +1,6 @@
 <?php
 defined('BOOTSTRAP') or die('Access denied');
-$schema['top']['administration']['items']['send_sms'] = array(
+$schema['top']['administration']['items']['sendsms_cscart.title'] = array(
     'title' => 'send SMS',
     'attrs' => array(
         'class'=>'is-addon'
@@ -9,7 +9,7 @@ $schema['top']['administration']['items']['send_sms'] = array(
     'position' => 0,
 );
 
-$schema['top']['administration']['items']['send_sms']['subitems']['send_sms_campaign'] = array(
+$schema['top']['administration']['items']['sendsms_cscart.title']['subitems']['send_sms_campaign'] = array(
     'title' => 'SMS campaign',
     'attrs' => array(
         'class'=>'is-addon'
@@ -18,7 +18,7 @@ $schema['top']['administration']['items']['send_sms']['subitems']['send_sms_camp
     'position' => 0,
 );
 
-$schema['top']['administration']['items']['send_sms']['subitems']['send_sms_logs'] = array(
+$schema['top']['administration']['items']['sendsms_cscart.title']['subitems']['send_sms_logs'] = array(
     'title' => 'SMS Logs',
     'attrs' => array(
         'class'=>'is-addon'

@@ -4,8 +4,12 @@
 
     <id>sendsms_cscart</id>
     <version>0.1</version>
-    <name>Send SMS</name>
-    <description>Send a sms with our service</description>
+    <compatibility>
+        <core_version>
+            <min>4.11.1</min>
+            <max>4.11.5</max>
+         </core_version>
+    </compatibility>
     <priority>102300</priority>
     <status>active</status>
 
@@ -14,7 +18,7 @@
             <section id="general">
                 <items>
                     <item id="header-login">
-                        <name>Loggin info</name>
+                        <name>Log in info</name>
                         <type>header</type>
                     </item>
                     <item id="lenghtlimitation">
