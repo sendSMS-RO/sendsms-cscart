@@ -10,7 +10,7 @@ $schema['top']['administration']['items']['sendsms_cscart.title'] = array(
 );
 
 $schema['top']['administration']['items']['sendsms_cscart.title']['subitems']['send_sms_campaign'] = array(
-    'title' => 'SMS campaign',
+    'title' => 'SMS Campaign',
     'attrs' => array(
         'class'=>'is-addon'
     ),
