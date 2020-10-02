@@ -30,7 +30,7 @@
 
 ### a. When the status of an order change
 
-1. In the same window as above, click "Message templates"
+1. In the "Manage" window click "Message templates"
 
 2. Check the checkbox of the message you want to send and fit his template
 
