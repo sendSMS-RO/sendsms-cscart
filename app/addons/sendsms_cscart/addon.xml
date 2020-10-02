@@ -8,7 +8,8 @@
         <core_version>
             <min>4.11.1</min>
             <max>4.11.5</max>
-         </core_version>
+        </core_version>
+        <core_edition>ULTIMATE</core_edition>
     </compatibility>
     <priority>102300</priority>
     <status>active</status>
