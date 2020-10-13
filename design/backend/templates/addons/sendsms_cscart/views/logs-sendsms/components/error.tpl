@@ -19,7 +19,7 @@
             {$error[5]|truncate:20}
         </div>
     </td>
-    <td class="nowrap" data-th="Info">
+    <td class="wrap" data-th="Info">
         {$error[6]}
     </td>
 </tr>

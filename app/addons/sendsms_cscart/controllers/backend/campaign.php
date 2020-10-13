@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'message' => $message,
                         'info' => 'Your log in name is empty',
                     );
-                    fn_set_notification('W', "send SMS", "The message was not send, your log in name is empty", 'K'); 
+                    fn_set_notification('W', "send SMS", "The message was not sent, your log in name is empty", 'K'); 
                     db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     return array(CONTROLLER_STATUS_OK, "campaign.manage");;
                 }
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'message' => $message,
                         'info' => 'Your log in password is empty',
                     );
-                    fn_set_notification('W', "send SMS", "The message was not send, your password is empty", 'K');  
+                    fn_set_notification('W', "send SMS", "The message was not sent, your password is empty", 'K');  
                     db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     return array(CONTROLLER_STATUS_OK, "campaign.manage");;
                 }
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'send_to' => $phone,
                         'date' => date('Y-m-d H:i:s', time()),
                         'message' => $message,
-                        'info' => "Message sent!",
+                        'info' => "Message sent! ID was {$result['details']}\n",
                     );
                     fn_set_notification('N', "send SMS", "Message sent!", 'K'); 
                     db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);

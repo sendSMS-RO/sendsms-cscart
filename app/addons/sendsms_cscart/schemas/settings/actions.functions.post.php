@@ -49,7 +49,8 @@ function fn_add_word_counter_sendsms_cscart_wordcounter()
                     var counter = document.createElement("div");
                     counter.textContent = "Some dummy text";
                     var widthToSet = textarea.offsetWidth;
-                    counter.setAttribute("style", "text-align:right; padding-bottom:1em; width:522px");
+                    var width = window.getComputedStyle(textarea, null).width;
+                    counter.setAttribute("style", "text-align:right; padding-bottom:1em; width:" + width);
                     textarea.parentNode.insertBefore(counter, textarea);
                     
                     textarea.addEventListener("input", (event) => 
