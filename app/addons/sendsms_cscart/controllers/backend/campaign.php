@@ -67,36 +67,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $order_info = fn_get_order_info($order['order_id']);
 
-            fn_print_r(empty($_REQUEST['countries']));
-            fn_print_r($order_info['b_country_descr']. " = " . $_REQUEST['countries']);
-            if(in_array($order_info['b_country_descr'], $_REQUEST['countries']) || empty($_REQUEST['countries']))
+            if($order_info['subtotal'] >= $_REQUEST['price'] || empty($_REQUEST['price']))
             {
-                if( intval($order_info['timestamp']) > $time_1 && $_REQUEST["time"] != "period" ||
-                    intval($order_info['timestamp']) > $time_1 && intval($order_info['timestamp']) < $time_2 && $_REQUEST["time"] == "period")
+                if(in_array($order_info['b_country_descr'], $_REQUEST['countries']) || empty($_REQUEST['countries']))
                 {
-                    $ok = false;
-                    if(!empty($p_ids))
+                    if( intval($order_info['timestamp']) > $time_1 && $_REQUEST["time"] != "period" ||
+                        intval($order_info['timestamp']) > $time_1 && intval($order_info['timestamp']) < $time_2 && $_REQUEST["time"] == "period")
                     {
-                        foreach($order_info['products'] as $product)
+                        $ok = false;
+                        if(!empty($p_ids))
                         {
-                            if(in_array(($product['product_id']), $p_ids))
-                            {   
-                                $ok = true;
-                                break;
-                            }
-                        }
-                    }else
-                    {
-                        $ok = true;
-                    }
-                    if($ok)
-                    {
-                        $phone = intval(preg_replace("/[^0-9]/", "", $order['phone']));
-                        if($phone != "")
-                        {
-                            if(!in_array($phone, $phones, true))
+                            foreach($order_info['products'] as $product)
                             {
-                                array_push($phones, $phone);
+                                if(in_array(($product['product_id']), $p_ids))
+                                {   
+                                    $ok = true;
+                                    break;
+                                }
+                            }
+                        }else
+                        {
+                            $ok = true;
+                        }
+                        if($ok)
+                        {
+                            $phone = intval(preg_replace("/[^0-9]/", "", $order['phone']));
+                            if($phone != "")
+                            {
+                                if(!in_array($phone, $phones, true))
+                                {
+                                    array_push($phones, $phone);
+                                }
                             }
                         }
                     }

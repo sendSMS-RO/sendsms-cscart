@@ -41,6 +41,9 @@
                 <h4>Find a product bought by your customers or left it empty for all your customers.</h4>
                 {include file="common/products_to_search.tpl"}
 
+                <label for="price">Choose the minimum order price</label>
+                <input type="number" step="0.01" min=0 id="price" name="price" value=0>
+
                 <label for="message-to-send" class="cm-required (asd)">Message:</label>
                 <textarea class="input-textarea-long" id="message-to-send" name="message" rows="10"></textarea>
             </fieldset>
