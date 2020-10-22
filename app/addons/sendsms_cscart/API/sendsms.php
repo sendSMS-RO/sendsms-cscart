@@ -54,6 +54,10 @@ class SendsmsApi
                 curl_close($this->curl);
                 $this->curl = curl_init();
             }
+            $useragent = $_SERVER['HTTP_USER_AGENT'];
+
+            curl_setopt($this->curl, CURLOPT_USERAGENT, "SendSMS.RO API Agent for " . $useragent);
+            curl_setopt($this->curl, CURLOPT_REFERER, $_SERVER['HTTP_ORIGIN']);
             curl_setopt($this->curl, CURLOPT_HEADER, 1);
             curl_setopt($this->curl, CURLOPT_URL, $url);
             $url = "https://api.sendsms.ro/json";

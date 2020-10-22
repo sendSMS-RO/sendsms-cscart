@@ -28,7 +28,7 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
         $wordsToReplace = array
         (
             "{order_id}" => $order_id,
-            "{total}" => $order_statuses['total']. '$',
+            "{total}" => number_format($order_statuses['total'], (int)db_get_array('SELECT decimals FROM ?:currencies WHERE currency_id=1')[0]['decimals'], ',', '') . " $",
             "{date}" => "",
             "{firstname}" => $order_statuses['firstname']
         );
