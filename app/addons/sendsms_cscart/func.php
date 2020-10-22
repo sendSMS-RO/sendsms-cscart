@@ -72,7 +72,8 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
                                 'message' => $message,
                                 'info' => 'Your log in name is empty',
                             );
-                            fn_set_notification('W', "send SMS", "The message was not sent, your log in name is empty", 'K'); 
+                            if($_SESSION['auth']['user_type'] === 'A')
+                                fn_set_notification('W', "send SMS", "The message was not sent, your log in name is empty", 'K'); 
                             db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                             return;
                         }
@@ -89,7 +90,8 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
                                 'message' => $message,
                                 'info' => 'Your log in password is empty',
                             );
-                            fn_set_notification('W', "send SMS", "The message was not sent, your password is empty", 'K');  
+                            if($_SESSION['auth']['user_type'] === 'A')
+                                fn_set_notification('W', "send SMS", "The message was not sent, your password is empty", 'K');  
                             db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                             return;
                         }
@@ -107,7 +109,8 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
                             'message' => $message,
                             'info' => "Message sent! ID was {$result['details']}\n",
                         );
-                        fn_set_notification('N', "send SMS", "Message sent!", 'K'); 
+                        if($_SESSION['auth']['user_type'] === 'A')
+                            fn_set_notification('N', "send SMS", "Message sent!", 'K'); 
                         db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     } else {
                         $error_data = array
@@ -119,7 +122,8 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
                             'message' => $message,
                             'info' => $api->getError() ,
                         );
-                        fn_set_notification('W', "send SMS", $api->getError(), 'K');  
+                        if($_SESSION['auth']['user_type'] === 'A')
+                            fn_set_notification('W', "send SMS", $api->getError(), 'K');  
                         db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     }
                 }
@@ -133,7 +137,8 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
                     'date' => date('Y-m-d H:i:s', time()),
                     'info' => 'The message box (' . $statuses[$status_to] . ') is empty' ,
                 );
-                fn_set_notification('W', "send SMS", "The message was not sent, the message box in empty", 'K');  
+                if($_SESSION['auth']['user_type'] === 'A')
+                    fn_set_notification('W', "send SMS", "The message was not sent, the message box in empty", 'K');  
                 db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
             }
         }
@@ -167,4 +172,12 @@ function fn_populate_errors()
     ) -> fetch_all();
 
     return array($errors, $search);
+}
+
+function fn_populate_cointries()
+{
+    $countries = db_get_array(
+        'SELECT country FROM ?:countries LEFT JOIN ?:country_descriptions USING(code)'
+    );
+    return $countries;
 }

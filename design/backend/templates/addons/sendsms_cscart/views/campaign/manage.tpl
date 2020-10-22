@@ -1,3 +1,6 @@
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 {capture name="mainbox"}
     <div id="content_sendsms_cscart_messages">
         <form id="campaign-form" class="cm-ajax submitForm" action="{"campaign.manage"|fn_url}" method="post" name="campaign.sms.1">
@@ -24,8 +27,17 @@
                     <input type="date" id="end" name="to">
                 </div>
             </fieldset>
-
+            <br>
             <fieldset>
+                <h4>Select the country of your customer or left it empty for all your customers.</h4>
+                <select class="country-selector" name="countries[]" multiple style="width: 258px;">                
+                    {foreach $countries as $country}
+                        {foreach $country as $country_name}
+                            <option value="{$country_name}">{$country_name}</option>
+                        {/foreach}
+                    {/foreach}
+                </select>
+                <br>
                 <h4>Find a product bought by your customers or left it empty for all your customers.</h4>
                 {include file="common/products_to_search.tpl"}
 
@@ -50,8 +62,14 @@
     <div class=”cm-notification-container”><div>
 {/capture}
 <script>
+    //jquery
+    $(document).ready(function() {
+        $('.country-selector').select2();
+            });
+
     var focused;
     document.addEventListener("DOMContentLoaded", (event) => {
+        //textarea counter
         var textareas = document.getElementsByTagName("textarea");
         for (var i=0, textarea; i<textareas.length && (textarea = textareas[i]); i++) {
             var counter = document.createElement("div");
@@ -88,6 +106,18 @@
         }
     }
 </script>
+
+<style type="text/css">
+    .select2-selection__rendered
+    {
+        display:block !important;
+    }
+    .select2-search--inline 
+    {
+        float: inherit !important;
+    }
+</style>
+
 {include file="common/mainbox.tpl"
          title="SMS Campaign"
          content=$smarty.capture.mainbox

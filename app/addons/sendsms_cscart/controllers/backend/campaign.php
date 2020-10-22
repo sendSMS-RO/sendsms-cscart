@@ -47,49 +47,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $time_1 += DateTimeHelper::getTimeZoneOffset(Settings::instance()->getValue('timezone', 'Appearance'));
                 $time_2 += DateTimeHelper::getTimeZoneOffset(Settings::instance()->getValue('timezone', 'Appearance'));
                 if($time_1 > $time_2)
-                {
-                    fn_set_notification("W", "send SMS", "Reverse the order of fields \"From\" and \"To\".", 'K');
+                {   
+                    if($_SESSION['auth']['user_type'] === 'A')
+                        fn_set_notification("W", "send SMS", "Reverse the order of fields \"From\" and \"To\".", 'K');
                     return array(CONTROLLER_STATUS_OK, "campaign.manage");
                 } 
             }else
             {
-                fn_set_notification("W", "send SMS", "The fields \"From\" and \"To\" are invalid or empty.", 'K');
+                if($_SESSION['auth']['user_type'] === 'A')
+                    fn_set_notification("W", "send SMS", "The fields \"From\" and \"To\" are invalid or empty.", 'K');
                 return array(CONTROLLER_STATUS_OK, "campaign.manage");
             }
         }
 
-        //getting the order made after the timestamp
         $orders = fn_get_orders(array())[0];
         $p_ids = preg_split('@,@', $_REQUEST['p_ids'], NULL, PREG_SPLIT_NO_EMPTY);
 
         foreach($orders as $order)
         {
-            if( intval(fn_get_order_info($order['order_id'])['timestamp']) > $time_1 && $_REQUEST["time"] != "period" ||
-                intval(fn_get_order_info($order['order_id'])['timestamp']) > $time_1 && intval(fn_get_order_info($order['order_id'])['timestamp']) < $time_2 && $_REQUEST["time"] == "period")
+            $order_info = fn_get_order_info($order['order_id']);
+
+            fn_print_r(empty($_REQUEST['countries']));
+            fn_print_r($order_info['b_country_descr']. " = " . $_REQUEST['countries']);
+            if(in_array($order_info['b_country_descr'], $_REQUEST['countries']) || empty($_REQUEST['countries']))
             {
-                $ok = false;
-                if(!empty($p_ids))
+                if( intval($order_info['timestamp']) > $time_1 && $_REQUEST["time"] != "period" ||
+                    intval($order_info['timestamp']) > $time_1 && intval($order_info['timestamp']) < $time_2 && $_REQUEST["time"] == "period")
                 {
-                    foreach(fn_get_order_info($order['order_id'])['products'] as $product)
+                    $ok = false;
+                    if(!empty($p_ids))
                     {
-                        if(in_array(($product['product_id']), $p_ids))
-                        {   
-                            $ok = true;
-                            break;
-                        }
-                    }
-                }else
-                {
-                    $ok = true;
-                }
-                if($ok)
-                {
-                    $phone = intval(preg_replace("/[^0-9]/", "", $order['phone']));
-                    if($phone != "")
-                    {
-                        if(!in_array($phone, $phones, true))
+                        foreach($order_info['products'] as $product)
                         {
-                            array_push($phones, $phone);
+                            if(in_array(($product['product_id']), $p_ids))
+                            {   
+                                $ok = true;
+                                break;
+                            }
+                        }
+                    }else
+                    {
+                        $ok = true;
+                    }
+                    if($ok)
+                    {
+                        $phone = intval(preg_replace("/[^0-9]/", "", $order['phone']));
+                        if($phone != "")
+                        {
+                            if(!in_array($phone, $phones, true))
+                            {
+                                array_push($phones, $phone);
+                            }
                         }
                     }
                 }
@@ -98,7 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if(isset($_REQUEST['check']))
         {
             if (defined('AJAX_REQUEST')) {
-                fn_set_notification('N', "send SMS", "A total of " . count($phones) . " phone numbers were found, resulting in approximately " . count($phones) * $messages_to_send . " messages will be send.", 'K');
+                if($_SESSION['auth']['user_type'] === 'A')
+                    fn_set_notification('N', "send SMS", "A total of " . count($phones) . " phone numbers were found, resulting in approximately " . count($phones) * $messages_to_send . " messages will be send.", 'K');
             }
             
         }else
@@ -119,7 +128,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'message' => $message,
                         'info' => 'Your log in name is empty',
                     );
-                    fn_set_notification('W', "send SMS", "The message was not sent, your log in name is empty", 'K'); 
+                    if($_SESSION['auth']['user_type'] === 'A')
+                        fn_set_notification('W', "send SMS", "The message was not sent, your log in name is empty", 'K'); 
                     db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     return array(CONTROLLER_STATUS_OK, "campaign.manage");;
                 }
@@ -136,7 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'message' => $message,
                         'info' => 'Your log in password is empty',
                     );
-                    fn_set_notification('W', "send SMS", "The message was not sent, your password is empty", 'K');  
+                    if($_SESSION['auth']['user_type'] === 'A')
+                        fn_set_notification('W', "send SMS", "The message was not sent, your password is empty", 'K');  
                     db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                     return array(CONTROLLER_STATUS_OK, "campaign.manage");;
                 }
@@ -156,7 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'message' => $message,
                         'info' => "Message sent! ID was {$result['details']}\n",
                     );
-                    fn_set_notification('N', "send SMS", "Message sent!", 'K'); 
+                    if($_SESSION['auth']['user_type'] === 'A')
+                        fn_set_notification('N', "send SMS", "Message sent!", 'K'); 
                     db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                 } else 
                 {
@@ -169,7 +181,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'message' => $message,
                         'info' => $api->getError() ,
                     );
-                    fn_set_notification('W', "send SMS", $api->getError(), 'K');  
+                    if($_SESSION['auth']['user_type'] === 'A')
+                        fn_set_notification('W', "send SMS", $api->getError(), 'K');  
                     db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
                 }
             }
@@ -179,5 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 }
 if($mode == 'manage')
 {
-
+    $countries = fn_populate_cointries();
+    Tygh::$app['view']->assign('countries', $countries);
 }
