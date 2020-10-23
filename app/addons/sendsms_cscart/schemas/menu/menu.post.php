@@ -27,4 +27,13 @@ $schema['top']['administration']['items']['sendsms_cscart.title']['subitems']['s
     'position' => 0,
 );
 
+$schema['top']['administration']['items']['sendsms_cscart.title']['subitems']['send_sms_test'] = array(
+    'title' => 'SMS Test',
+    'attrs' => array(
+        'class'=>'is-addon'
+    ),
+    'href' => 'test-sendsms.send',
+    'position' => 0,
+);
+
 return $schema;

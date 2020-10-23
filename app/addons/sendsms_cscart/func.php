@@ -165,7 +165,7 @@ function fn_populate_errors()
         '   SELECT * 
             FROM ?:sendsms_errors
             '  . $extra_query . '
-            ORDER BY id ASC 
+            ORDER BY id DESC 
             LIMIT ?i, ?i', 
         $startIndex, 
         $search['items_per_page']
