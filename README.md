@@ -40,9 +40,17 @@
 
 1. Go to Administration -> send SMS -> SMS Campaign
 
-2. Fil the fields below
+2. Fill the fields below
 
 ![Image of campaign](https://github.com/sendSMS-RO/sendsms-cscart-1.0.0/blob/master/images/campaign.png)
+
+### c. Send a test message
+
+1. Go to Administration -> send SMS -> SMS Test
+
+2. Fill the fields below
+
+![Image of test](https://github.com/sendSMS-RO/sendsms-cscart-1.0.0/blob/master/images/test.png)
 
 ## Logs
 
