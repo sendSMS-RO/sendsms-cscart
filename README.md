@@ -26,9 +26,9 @@
 
 ![Image phone change](https://github.com/sendSMS-RO/sendsms-cscart-1.0.0/blob/master/images/phone.png)
 
-## Send a message 
+## How to send a message?e
 
-### a. When the status of an order change
+### a. How to send a message when the status of the order changes
 
 1. In the "Manage" window click "Message templates"
 
@@ -36,7 +36,7 @@
 
 ![Image of templates](https://github.com/sendSMS-RO/sendsms-cscart-1.0.0/blob/master/images/templates.png)
 
-### b. When you want to make a campaign
+### b. How to send a message when you want to do an sms campaign
 
 1. Go to Administration -> send SMS -> SMS Campaign
 
@@ -44,7 +44,7 @@
 
 ![Image of campaign](https://github.com/sendSMS-RO/sendsms-cscart-1.0.0/blob/master/images/campaign.png)
 
-### c. Send a test message
+### c. How to send a test message?
 
 1. Go to Administration -> send SMS -> SMS Test
 
@@ -54,6 +54,6 @@
 
 ## Logs
 
-1. You will find information about the message send in Administration -> send SMS -> SMS Logs
+1. You will find information about the messages sent in Administration -> send SMS -> SMS Logs
 
 ![Image of logs](https://github.com/sendSMS-RO/sendsms-cscart-1.0.0/blob/master/images/logs.png)
