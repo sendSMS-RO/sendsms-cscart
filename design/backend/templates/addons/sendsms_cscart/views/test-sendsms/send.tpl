@@ -1,9 +1,16 @@
 {capture name="mainbox"}
     <div id="content_sendsms_cscart_messages">
-        <form id="campaign-form" class="cm-ajax submitForm" action="{"test-sendsms.send"|fn_url}" method="post" name="test.sms.3">
+        <form id="campaign-form" class="cm-ajax submitForm" action="{"test-sendsms.send"|fn_url}" method="POST" name="test.sms.3">
                 <label for="phone"  class="cm-required">Test phone</label>
                 <input type="number" step="0" id="phone" name="phone">
-
+                <br/>
+                <label class="checkbox inline"><input class="checkbox" type="checkbox" id="short-message" name="short_sendsms_1">Change all long url to short url? (Please use only urls that start with https:// or http://)</label>
+                {literal}
+                    <br>
+                    <label class="checkbox inline">
+                    <input class="checkbox" type="checkbox" id="gdpr-message" name="gdpr_sendsms_1">
+                    Add unsubscribe link? (You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message.)</label>
+                {/literal}
                 <label for="message-to-send" class="cm-required">Message:</label>
                 <textarea class="input-textarea-long" id="message-to-send" name="message" rows="10"></textarea>
             </fieldset>
@@ -11,6 +18,7 @@
                         but_role="submit" 
                         but_name="save"
                         but_text="Send message"
+                        but_id="submit-test"
             }
         </form>
     </div>
@@ -64,6 +72,6 @@
     }
 </style>
 {include file="common/mainbox.tpl"
-         title="SMS Campaign"
+         title="SMS Test"
          content=$smarty.capture.mainbox
 }

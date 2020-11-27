@@ -23,3 +23,67 @@ msgstr "Message templates"
 msgctxt "Languages::sendsms_cscart.title"
 msgid "send SMS"
 msgstr "send SMS"
+
+msgctxt "SettingsTooltips::sendsms_cscart::paid-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::paid-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+msgctxt "SettingsTooltips::sendsms_cscart::complete-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::complete-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+msgctxt "SettingsTooltips::sendsms_cscart::failed-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::failed-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+msgctxt "SettingsTooltips::sendsms_cscart::declined-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::declined-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+msgctxt "SettingsTooltips::sendsms_cscart::backordered-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::backordered-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+msgctxt "SettingsTooltips::sendsms_cscart::canceled-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::canceled-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+msgctxt "SettingsTooltips::sendsms_cscart::awaiting_call-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::awaiting_call-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+msgctxt "SettingsTooltips::sendsms_cscart::open-short"
+msgid "Please use only urls that start with https:// or http://"
+msgstr "Please use only urls that start with https:// or http://"
+
+msgctxt "SettingsTooltips::sendsms_cscart::open-gdpr"
+msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."

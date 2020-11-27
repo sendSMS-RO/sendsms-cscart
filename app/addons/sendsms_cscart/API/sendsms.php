@@ -55,9 +55,9 @@ class SendsmsApi
                 $this->curl = curl_init();
             }
             $useragent = $_SERVER['HTTP_USER_AGENT'];
-
+            //fn_print_die($url);
             curl_setopt($this->curl, CURLOPT_USERAGENT, "SendSMS.RO API Agent for " . $useragent);
-            curl_setopt($this->curl, CURLOPT_REFERER, $_SERVER['HTTP_ORIGIN']);
+            curl_setopt($this->curl, CURLOPT_REFERER, isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : $_SERVER['HTTP_REFERER']);
             curl_setopt($this->curl, CURLOPT_HEADER, 1);
             curl_setopt($this->curl, CURLOPT_URL, $url);
             $url = "https://api.sendsms.ro/json";
@@ -149,7 +149,7 @@ class SendsmsApi
         $this->performActionsImmediately = $state;
     }
 
-    function message_send($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null)
+    function message_send($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = false)
     {
         $args = func_get_args();
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);

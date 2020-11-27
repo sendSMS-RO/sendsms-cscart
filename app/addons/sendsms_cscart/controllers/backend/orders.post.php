@@ -10,6 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     if ($mode == 'details') 
     {
         $message = $_POST['message_sendsms_1'];
+        $short = filter_var(isset($_POST['short_sendsms_1']) ? $_POST['short_sendsms_1'] : "false", FILTER_VALIDATE_BOOLEAN);
+        $gdpr = filter_var(isset($_POST['gdpr_sendsms_1']) ? $_POST['gdpr_sendsms_1'] : "false", FILTER_VALIDATE_BOOLEAN);
         if(!empty($message))
         {
             $order_info = fn_get_order_info($_GET['order_id']);
@@ -55,7 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         return;
                     }
                 
-                $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, true);
+                    if($gdpr)
+                        $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
+                    else
+                        $result = $api -> message_send($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
                 if($api->ok($result)) 
                 {
                     $error_data = array

@@ -96,8 +96,14 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
                             return;
                         }
 
-                    //this is how the msg will be send    
-                    $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, true);
+                    //this is how the msg will be send  
+                    $gdpr = Registry::get('addons.sendsms_cscart.' . $statuses[$status_to] . '-gdpr') == 'Y' ? true : false;  
+                    $short = Registry::get('addons.sendsms_cscart.' . $statuses[$status_to] . '-short') == 'Y' ? true : false;  
+
+                    if($gdpr)
+                        $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
+                    else
+                        $result = $api -> message_send($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
 
                     if($api->ok($result)) {
                         $error_data = array
@@ -148,15 +154,15 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
 function fn_populate_errors()
 {
     $extra_query = "";
-    $phone = $_GET['phone'];
-    $date = $_GET['date'];
+    $phone = isset($_GET['phone']) ? $_GET['phone'] : "";
+    $date = isset($_GET['date']) ? $_GET['date'] : "";
 
     $extra_query = ' WHERE send_to LIKE "%' . $phone . '%" AND date LIKE "%' . $date . '%"';
     
     $search = Array
     (
-        'page' => $_REQUEST['page'] ? $_REQUEST['page'] : 1,
-        'items_per_page' => $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : Registry::get('settings.Appearance.admin_elements_per_page'),
+        'page' => isset($_REQUEST['page']) ? $_REQUEST['page'] : 1,
+        'items_per_page' => isset($_REQUEST['items_per_page']) ? $_REQUEST['items_per_page'] : Registry::get('settings.Appearance.admin_elements_per_page'),
         'total_items' => db_query('SELECT COUNT(*) from ?:sendsms_errors'  . $extra_query) -> fetch_all()[0][0],
     );
     $startIndex = ($search['page']  - 1) * $search['items_per_page'];

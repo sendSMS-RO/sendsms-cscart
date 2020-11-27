@@ -106,16 +106,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         }        
         if(isset($_REQUEST['check']))
         {
+            $unexistent_phones = 0;
+            $price = 0;
+            $api = new SendsmsApi();
+            if(Registry::get('addons.sendsms_cscart.login-name') !== "" && Registry::get('addons.sendsms_cscart.login-pass') !== "")
+            {
+                $api -> setUsername(Registry::get('addons.sendsms_cscart.login-name'));
+                $api -> setPassword(Registry::get('addons.sendsms_cscart.login-pass'));
+            } else
+            {
+                if (defined('AJAX_REQUEST')) {
+                    if($_SESSION['auth']['user_type'] === 'A')
+                        fn_set_notification('W', "send SMS", "Please configure your module first", 'K');
+                }
+                return array(CONTROLLER_STATUS_OK, "campaign.manage");;
+            }
+            foreach($phones as $phone)
+            {
+                $result = $api -> route_check_price($phone);
+                if ($result['details']['status'] === 64) {
+                    $multiplier = $result['details']['cost'];
+                } else {
+                    $multiplier = 0;
+                    $unexistent_phones++;
+                }
+                $price += $messages_to_send * $multiplier;
+            }
             if (defined('AJAX_REQUEST')) {
                 if($_SESSION['auth']['user_type'] === 'A')
-                    fn_set_notification('N', "send SMS", "A total of " . count($phones) . " phone numbers were found, resulting in approximately " . count($phones) * $messages_to_send . " messages will be send.", 'K');
+                    fn_set_notification('N', "send SMS", "A total of " . (count($phones) - $unexistent_phones) . " phone numbers were found, resulting in approximately " . (count($phones) - $unexistent_phones) * $messages_to_send . " messages at an estimate price of " . $price . " euro.", 'K');
             }
-            
+            return array(CONTROLLER_STATUS_OK, "campaign.manage");;
         }else
         {
             $message = $_REQUEST['message'];
             $label = Registry::get('addons.sendsms_cscart.message-expeditor');
             $api = new SendsmsApi();
+            $short = filter_var(isset($_POST['short']) ? $_POST['short'] : "false", FILTER_VALIDATE_BOOLEAN);
+            $gdpr = filter_var(isset($_POST['gdpr']) ? $_POST['gdpr'] : "false", FILTER_VALIDATE_BOOLEAN);
             if(Registry::get('addons.sendsms_cscart.login-name') !== "")
                 $api -> setUsername(Registry::get('addons.sendsms_cscart.login-name'));
                 else
@@ -155,7 +183,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             
             foreach($phones as $phone)
             {
-                $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, true);
+                if($gdpr)
+                    $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
+                else
+                    $result = $api -> message_send($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
 
                 if($api->ok($result)) 
                 {

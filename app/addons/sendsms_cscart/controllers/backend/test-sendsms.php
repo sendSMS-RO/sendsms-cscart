@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $message = $_POST['message'];
         $phone = $_POST['phone'];
         $order_info = fn_get_order_info($_GET['order_id']);
+        $short = filter_var(isset($_POST['short_sendsms_1']) ? $_POST['short_sendsms_1'] : "false", FILTER_VALIDATE_BOOLEAN);
+        $gdpr = filter_var(isset($_POST['gdpr_sendsms_1']) ? $_POST['gdpr_sendsms_1'] : "false", FILTER_VALIDATE_BOOLEAN);
         if($phone != "")
         {
             $label = Registry::get('addons.sendsms_cscart.message-expeditor');
@@ -55,7 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     return;
                 }
             
-            $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, true);
+                if($gdpr)
+                    $result = $api -> message_send_gdpr($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
+                else
+                    $result = $api -> message_send($phone,$message, $label ? $label : "0", 19, null, null, null, -1, null, $short);
             if($api->ok($result)) 
             {
                 $error_data = array
@@ -70,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 if($_SESSION['auth']['user_type'] === 'A')
                     fn_set_notification('N', "send SMS", "Message sent!", 'K'); 
                 db_query('INSERT INTO ?:sendsms_errors ?e', $error_data);
+                return;
             } else 
             {
                 $error_data = array

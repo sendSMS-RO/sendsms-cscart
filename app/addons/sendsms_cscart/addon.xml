@@ -3,7 +3,7 @@
 <addon scheme="3.0">
 
     <id>sendsms_cscart</id>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <compatibility>
         <core_version>
             <min>4.11.1</min>
@@ -37,6 +37,14 @@
                         <name>The sender's label</name>
                         <type>input</type> 
                     </item>
+                    <item id="header-details">
+                        <name>Account details</name>
+                        <type>header</type>
+                    </item>
+                    <item id="giveaccountinfo">
+                        <type>info</type>
+                        <handler>fn_add_get_details_sendsms_cscart_giveaccountinfo</handler>
+                    </item>
                 </items>
             </section>
             <section id="messages">
@@ -58,12 +66,32 @@
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
+                    <item id="paid-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="paid-gdpr">
+                        <name>Add unsubscribe link?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
                     <item id="paid-message">
                         <name>The message when order status is change to "Paid (P)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="complete-validation">
                         <name>Sending message when order status is change to "Complete (C)"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="complete-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="complete-gdpr">
+                        <name>Add unsubscribe link?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
@@ -76,12 +104,32 @@
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
+                    <item id="open-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="open-gdpr">
+                        <name>Add unsubscribe link?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
                     <item id="open-message">
                         <name>The message when order status is change to "Open (O)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="failed-validation">
                         <name>Sending message when order status is change to "Failed (F)"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="failed-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="failed-gdpr">
+                        <name>Add unsubscribe link?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
@@ -94,12 +142,32 @@
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
+                    <item id="declined-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="declined-gdpr">
+                        <name>Add unsubscribe link?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
                     <item id="declined-message">
                         <name>The message when order status is change to "Declined (D)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="backordered-validation">
                         <name>Sending message when order status is change to "Backordered (B)"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="backordered-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="backordered-gdpr">
+                        <name>Add unsubscribe link?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
@@ -112,12 +180,32 @@
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
+                    <item id="canceled-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="canceled-gdpr">
+                        <name>Add unsubscribe link?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
                     <item id="canceled-message">
                         <name>The message when order status is change to "Canceled (I)"</name>
                         <type>textarea</type>
                     </item>
                     <item id="awaiting_call-validation">
                         <name>Sending message when order status is change to "Awaiting call (Y)"?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="awaiting_call-short">
+                        <name>Change all long url to short url?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="awaiting_call-gdpr">
+                        <name>Add unsubscribe link?</name>
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>

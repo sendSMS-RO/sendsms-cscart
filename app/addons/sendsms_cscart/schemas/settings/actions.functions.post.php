@@ -1,6 +1,12 @@
 <?php
 
-if (!defined('BOOTSTRAP')) { die('Access denied'); }
+use Tygh\Registry;
+use Tygh\Settings;
+require_once (Registry::get('config.dir.addons') ."sendsms_cscart/API/sendsms.php");
+
+if (!defined('BOOTSTRAP')) {
+    die('Access denied');
+}
 
 function fn_add_limit_sendsms_cscart_lenghtlimitation()
 {
@@ -14,7 +20,7 @@ function fn_add_limit_sendsms_cscart_lenghtlimitation()
 function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
 {
 
-    return 'Avaible values: ' . '<a onClick="placeInFocusedTextarea(\'{order_id}\')">' . '{order_id}' .'</a>'. ', ' . '<a onClick="placeInFocusedTextarea(\'{total}\')">'.'{total}'.'</a>'.', ' . '<a onClick="placeInFocusedTextarea(\'{date}\')">'.'{date}'.'</a>'.', ' . '<a onClick="placeInFocusedTextarea(\'{firstname}\')">'.'{firstname} '.'</a>'.'
+    return 'Avaible values: ' . '<a onClick="placeInFocusedTextarea(\'{order_id}\')">' . '{order_id}' . '</a>' . ', ' . '<a onClick="placeInFocusedTextarea(\'{total}\')">' . '{total}' . '</a>' . ', ' . '<a onClick="placeInFocusedTextarea(\'{date}\')">' . '{date}' . '</a>' . ', ' . '<a onClick="placeInFocusedTextarea(\'{firstname}\')">' . '{firstname} ' . '</a>' . '
     <script>
     var focused;
     document.addEventListener("DOMContentLoaded", (event) => {
@@ -37,10 +43,31 @@ function fn_add_autocomplete_variables_sendsms_cscart_messageinformation()
     </script>';
 }
 
+function fn_add_get_details_sendsms_cscart_giveaccountinfo()
+{
+    $api = new SendsmsApi();
+    if (Registry::get('addons.sendsms_cscart.login-name') !== "")
+        $api->setUsername(Registry::get('addons.sendsms_cscart.login-name'));
+    else {
+        return "Please add your sendsms.ro username";
+    }
+    if (Registry::get('addons.sendsms_cscart.login-pass') !== "")
+        $api->setPassword(Registry::get('addons.sendsms_cscart.login-pass'));
+    else {
+        return  "Please add your sendsms.ro password/apikey";
+    }
+    $result = $api->user_get_balance();
+    if($result['status'] >= 0)
+    {
+        return "Your current credit is " . $result['details'] . " euro.";
+    }
+    return "Unable to connect to API";
+}
+
 function fn_add_word_counter_sendsms_cscart_wordcounter()
 {
     return
-    '   
+        '   
         <script>
             var focused;
             document.addEventListener("DOMContentLoaded", (event) => {

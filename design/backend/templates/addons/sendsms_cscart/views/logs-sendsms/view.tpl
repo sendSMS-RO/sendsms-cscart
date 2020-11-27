@@ -1,5 +1,4 @@
 {capture name="mainbox"}
-    {if $errors}
     <form id="search-form" action="{"logs-sendsms.view"|fn_url}" method="post" name="logs.sms.1">
         <label style="display:inline; font-size:15px" for="phone-number">Search by phone number: </label>
         <input style="margin-bottom: 0" type="number" id="phone-number" name="phone">
@@ -11,6 +10,7 @@
                         but_text="Show logs"
             }
     </form>
+    {if $errors}
     {include file="common/pagination.tpl" 
         
     }

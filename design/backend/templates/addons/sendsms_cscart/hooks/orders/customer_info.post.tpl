@@ -3,11 +3,15 @@
 <form>
 </form>
 <div class="control-group">
-    <label class="control-label">Message</label>
+    <label class="control-label">SendSMS</label>
     <div class="controls">
         <form id="order-message-form" class="cm-ajax submitForm" action="" method="post" name="order.sms.2">
-            <textarea class="input-textarea-long" id="message-to-send" name="message_sendsms_1" rows="8"></textarea>
-
+            <label>Message:<textarea class="input-textarea-long" id="message-to-send" name="message_sendsms_1" rows="8"></textarea></label>
+            <label class="checkbox inline"><input class="checkbox" type="checkbox" id="short-message" name="short_sendsms_1">Change all long url to short url? (Please use only urls that start with https:// or http://)</label>
+            {literal}
+            <br/>
+            <label class="checkbox inline"><input class="checkbox" type="checkbox" id="gdpr-message" name="gdpr_sendsms_1">Add unsubscribe link? (You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message.)</label>
+            {/literal}
             <div style="display: block; margin-left: auto; margin-right: auto; width: 40%; margin-top: 1em;">
                 {include file="buttons/button.tpl"
                 but_role="submit"
