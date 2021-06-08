@@ -9,8 +9,8 @@ msgid "Send SMS"
 msgstr "Send SMS"
 
 msgctxt "Addons::description::sendsms_cscart"
-msgid "Send a sms with our service."
-msgstr "Send a sms with our service."
+msgid "Send an sms with our service."
+msgstr "Send an sms with our service."
 
 msgctxt "SettingsSections::sendsms_cscart::general"
 msgid "Log in info"
@@ -23,6 +23,22 @@ msgstr "Message templates"
 msgctxt "Languages::sendsms_cscart.title"
 msgid "send SMS"
 msgstr "send SMS"
+
+msgctxt "SettingsTooltips::sendsms_cscart::login-name"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::login-pass"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::message-expeditor"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::login_cc"
+msgid "Select your country phone number prefix"
+msgstr "Select your country phone number prefix"
 
 msgctxt "SettingsTooltips::sendsms_cscart::paid-short"
 msgid "Please use only urls that start with https:// or http://"
@@ -87,3 +103,37 @@ msgstr "Please use only urls that start with https:// or http://"
 msgctxt "SettingsTooltips::sendsms_cscart::open-gdpr"
 msgid "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
 msgstr "You must specify {gdpr} key message. {gdpr} key will be replaced automaticaly with confirmation unique confirmation link. If {gdpr} key is not specified confirmation link will be placed at the end of message."
+
+
+
+msgctxt "SettingsTooltips::sendsms_cscart::paid-validation"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::complete-validation"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::failed-validation"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::declined-validation"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::backordered-validation"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::canceled-validation"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::awaiting_call-validation"
+msgid ""
+msgstr ""
+
+msgctxt "SettingsTooltips::sendsms_cscart::open-validation"
+msgid ""
+msgstr ""

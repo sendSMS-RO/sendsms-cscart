@@ -3,16 +3,16 @@
 <addon scheme="3.0">
 
     <id>sendsms_cscart</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <compatibility>
         <core_version>
             <min>4.11.1</min>
-            <max>4.11.5</max>
+            <max>4.14</max>
         </core_version>
     </compatibility>
     <priority>102300</priority>
     <status>active</status>
-
+    <supplier>Any Media Development</supplier>
     <settings layout="separate">
         <sections>
             <section id="general">
@@ -27,15 +27,20 @@
                     </item>
                     <item id="login-name">
                         <name>Enter your log-in name here</name>
-                        <type>input</type> 
+                        <type>input</type>
                     </item>
-                    <item id="login-pass"> 
+                    <item id="login-pass">
                         <name>Enter your log-in password or api key</name>
                         <type>password</type>
                     </item>
+                    <item id="login_cc">
+                        <name>Country code</name>
+                        <type>selectbox</type>
+                        <variants />
+                    </item>
                     <item id="message-expeditor">
                         <name>The sender's label</name>
-                        <type>input</type> 
+                        <type>input</type>
                     </item>
                     <item id="header-details">
                         <name>Account details</name>
@@ -219,7 +224,7 @@
     </settings>
 
     <queries>
-        <item for="install">DROP TABLE IF EXISTS ?:sendsms_errors;</item>
+        <item for="install">DROP TABLE IF EXISTS ?:sendsms_errors, ?:sendsms_variables;</item>
         <item for="install">
             CREATE TABLE `?:sendsms_errors` 
             (   
@@ -233,7 +238,15 @@
                 PRIMARY KEY (`id`)
             ) Engine=MyISAM DEFAULT CHARSET UTF8;
         </item>
-        <item for="uninstall">DROP TABLE IF EXISTS ?:sendsms_errors;</item>
+        <item for="install">
+            CREATE TABLE `?:sendsms_variables`
+            (
+                `key` varchar(50),
+                `assigned` varchar(50),
+                PRIMARY KEY(`key`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:sendsms_errors, ?:sendsms_variables;</item>
     </queries>
 
 </addon>

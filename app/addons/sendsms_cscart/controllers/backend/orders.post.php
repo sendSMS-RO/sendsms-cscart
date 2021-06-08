@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if(!empty($message))
         {
             $order_info = fn_get_order_info($_GET['order_id']);
-            $phone = intval(preg_replace("/[^0-9]/", "", $order_info['phone']));
+            $phone = fn_validate_phone_sendsms_cscart($phone);
             if($phone != "")
             {
                 $label = Registry::get('addons.sendsms_cscart.message-expeditor');

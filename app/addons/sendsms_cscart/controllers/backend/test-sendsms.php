@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $message = $_POST['message'];
         $phone = $_POST['phone'];
-        $order_info = fn_get_order_info($_GET['order_id']);
+        $phone = fn_validate_phone_sendsms_cscart($phone);
         $short = filter_var(isset($_POST['short_sendsms_1']) ? $_POST['short_sendsms_1'] : "false", FILTER_VALIDATE_BOOLEAN);
         $gdpr = filter_var(isset($_POST['gdpr_sendsms_1']) ? $_POST['gdpr_sendsms_1'] : "false", FILTER_VALIDATE_BOOLEAN);
         if($phone != "")
@@ -98,7 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             return;
         }
     }
-}
-if($mode == 'send')
-{
 }

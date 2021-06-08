@@ -6,7 +6,7 @@ class SendsmsApi
 
     var $curl = false;
 
-    var $debug = false;
+    var $debugState = false;
 
     var $error = null;
 
@@ -36,7 +36,7 @@ class SendsmsApi
 
     function debug($str, $nl = false)
     {
-        if ($this->debug) {
+        if ($this->debugState) {
             fn_print_r($str);
             if ($nl) {
                 fn_print_r("\n");
@@ -55,7 +55,6 @@ class SendsmsApi
                 $this->curl = curl_init();
             }
             $useragent = $_SERVER['HTTP_USER_AGENT'];
-            //fn_print_die($url);
             curl_setopt($this->curl, CURLOPT_USERAGENT, "SendSMS.RO API Agent for " . $useragent);
             curl_setopt($this->curl, CURLOPT_REFERER, isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : $_SERVER['HTTP_REFERER']);
             curl_setopt($this->curl, CURLOPT_HEADER, 1);
@@ -152,13 +151,14 @@ class SendsmsApi
     function message_send($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = false)
     {
         $args = func_get_args();
+        fn_save_price_sendsms_cscart($to);
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
     }
 
     function message_send_gdpr($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = false)
     {
         $args = func_get_args();
-        $this->debug($args);
+        fn_save_price_sendsms_cscart($to);
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
     }
 

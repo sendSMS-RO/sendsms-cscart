@@ -2,7 +2,8 @@
 
 use Tygh\Registry;
 use Tygh\Settings;
-require_once (Registry::get('config.dir.addons') ."sendsms_cscart/API/sendsms.php");
+
+require_once(Registry::get('config.dir.addons') . "sendsms_cscart/API/sendsms.php");
 
 if (!defined('BOOTSTRAP')) {
     die('Access denied');
@@ -12,7 +13,7 @@ function fn_add_limit_sendsms_cscart_lenghtlimitation()
 {
     return '<script>
     document.addEventListener("DOMContentLoaded", (event) => {
-        document.getElementById("addon_option_sendsms_cscart_message-expeditor").setAttribute("maxlength", 11);
+        document.querySelector(\'[id^="addon_option_sendsms_cscart_message-expeditor"]\').setAttribute("maxlength", 11);
     });
     </script>';
 }
@@ -57,11 +58,22 @@ function fn_add_get_details_sendsms_cscart_giveaccountinfo()
         return  "Please add your sendsms.ro password/apikey";
     }
     $result = $api->user_get_balance();
-    if($result['status'] >= 0)
-    {
+    if (is_array($result) && $result['status'] >= 0) {
         return "Your current credit is " . $result['details'] . " euro.";
     }
     return "Unable to connect to API";
+}
+
+function fn_settings_variants_addons_sendsms_cscart_login_cc()
+{
+    include Registry::get('config.dir.addons') . "sendsms_cscart/cc.php";
+
+    $countryCodes;
+    $countryCodes['INT'] = "International";
+    foreach ($country_codes as $key => $value) {
+        $countryCodes[$key] = "$key (+$value)";
+    }
+    return $countryCodes;
 }
 
 function fn_add_word_counter_sendsms_cscart_wordcounter()
