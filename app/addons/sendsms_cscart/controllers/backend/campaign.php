@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $message,
                         $phone,
                         $label
-                    ), ',', '"', "\0");
+                    ));
                 }
                 $name = "CS-Cart - " . (isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : $_SERVER['HTTP_REFERER']) . " - " . uniqid();
                 $result = $api->batch_create($name, $fileUrl);
