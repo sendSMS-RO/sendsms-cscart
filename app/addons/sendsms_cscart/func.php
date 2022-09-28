@@ -15,6 +15,19 @@ if (!defined('BOOTSTRAP')) {
 function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
     if (($status_to != $status_from && $status_from != 'N') || ($status_from == 'N' && empty($order_info))) {
+        $currency_settings = Registry::get('currencies.' . CART_PRIMARY_CURRENCY);
+        if (!empty($currency_settings)) {
+            $formattedTotal = number_format($order_statuses['total'], (int)$currency_settings['decimals'], $currency_settings['decimals_separator'], $currency_settings['thousands_separator']);
+            if ($currency_settings['after'] == 'Y') {
+                $formattedTotal .= ' '.$currency_settings['symbol'];
+            } else {
+                $formattedTotal = $currency_settings['symbol'].$formattedTotal;
+            }
+        } else {
+            $formattedTotal = number_format($order_statuses['total'], 2);
+        }
+        
+        if (!empty($currency_settings))
         $phone = $order_statuses["phone"];
         $phone = fn_validate_phone_sendsms_cscart($phone);
 
@@ -31,7 +44,7 @@ function fn_sendsms_cscart_change_order_status_post($order_id, $status_to, $stat
         );
         $wordsToReplace = array(
             "{order_id}" => $order_id,
-            "{total}" => number_format($order_statuses['total'], (int)db_get_array('SELECT decimals FROM ?:currencies WHERE currency_id=1')[0]['decimals'], ',', '') . " $",
+            "{total}" => $formattedTotal,
             "{date}" => "",
             "{firstname}" => $order_statuses['firstname']
         );
