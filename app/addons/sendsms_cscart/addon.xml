@@ -3,7 +3,7 @@
 <addon scheme="3.0">
 
     <id>sendsms_cscart</id>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <compatibility>
         <core_version>
             <min>4.11.1</min>
@@ -13,7 +13,7 @@
     <priority>102300</priority>
     <status>active</status>
     <supplier>Any Media Development</supplier>
-    <settings layout="separate">
+    <settings layout="separate" edition_type="ROOT">
         <sections>
             <section id="general">
                 <items>
@@ -41,6 +41,11 @@
                     <item id="message-expeditor">
                         <name>The sender's label</name>
                         <type>input</type>
+                    </item>
+                    <item id="allow-vendor-access">
+                        <name>Allow vendor access to sending SMS?</name>
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
                     </item>
                     <item id="header-details">
                         <name>Account details</name>
